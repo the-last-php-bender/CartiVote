@@ -1,3 +1,4 @@
+
 const map = require("./storage.js");
 const rollup = require('./rollupStateHandler.js');
 
@@ -11,7 +12,7 @@ class VotingSystem {
         return rollup.handleNotice("Candidate added successfully");
     }
     async getCandidates() {
-        const getAll = await map.getAll();
+        const getAll =  map.getAll();
         if (!getAll) {
             return rollup.handleReport({
                 error: "No candidates has been registered"
@@ -20,6 +21,7 @@ class VotingSystem {
         return await rollup.handleReport(getAll, 'accept');
     }
     async getACandidate(public_key) {
+        console.log("This is the Candidate",public_key)
         const candidate = map.Get(public_key);
         if (!candidate) {
             return await rollup.handleReport({
@@ -34,6 +36,7 @@ class VotingSystem {
     
     static async closeVote() {
         const entries = map.entries()
+        console.log("entries",entries)
         let winningCandidate = null;
         let maxVotes = 0;
 
@@ -42,20 +45,17 @@ class VotingSystem {
                 error: "No votes have been registered"
             });
         }
-        for (const [public_key, candidate] of  map.entries()) {
+        for (const [public_key, candidate] of  entries) {
             if (candidate.voteCount > maxVotes) {
                 winningCandidate = candidate;
                 maxVotes = candidate.voteCount;
 
             }
-            console.log("candidate names",candidate)
         }
 
         if (winningCandidate) {
             const winnerDetails = await VotingSystem.getSingleCandidate(winningCandidate.public_key);
-            console.log("Checking the winner key", winnerDetails)
-
-            return rollup.handleNotice({
+            return rollup.handleReport({
                 winner: "WINNER:", winnerDetails,
             });
         } else {
@@ -86,6 +86,7 @@ class VotingSystem {
                 });
             }
             const candidate = map.Get(public_key);
+            console.log("This is the castVote",public_key)
             if (!candidate) {
                 return await rollup.handleReport({
                     error: "Candidate does not exist"

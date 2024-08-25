@@ -1,4 +1,3 @@
-// put the mapping 
 const voteMap = new Map();
 const voterMap = new Set();
 

@@ -17,7 +17,7 @@ async function handle_advance({ metadata, payload }) {
   try {
     if (jsonPayload.method === 'createCandidate') {
       data = {
-        public_key: sender,
+        public_key: public_key,
         name: jsonPayload.name
       }
       await controller.createCandidate(public_key, data)

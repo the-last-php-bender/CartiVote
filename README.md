@@ -172,9 +172,9 @@ Here you can access examples of dapp communication and resource usage.
   http://localhost:8080/inspect/getAllCandidates
   ```
   ```
-  * #### getWinner
+* #### getSingleCandidateDetail
   ```js
-    description — Get all registered candidates.
+    description — Get a registered candidates.
   ```
   returned hex sample
   ```json
@@ -193,9 +193,45 @@ Here you can access examples of dapp communication and resource usage.
   ```json 
     [
         {
-            "public_key":"0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+            "public_key":"0x.............",
             "name":"John Doe",
             "voteCount":10
+        }
+    ]
+  ```
+  interact
+    - Access the Cartesi inspect endpoint on your browser:
+  ```sh 
+  http://localhost:8080/inspect/getSingleCandidate/{{public_key}}
+  ```
+
+  * #### getWinner
+  ```js
+    description — Get the  Winner.
+  ```
+  returned hex sample
+  ```json
+    {
+        "status": "Accepted",
+        "exception_payload": null,
+        "reports": [
+            {
+                "payload": "0x..."
+            }
+        ],
+        "processed_input_count": 2
+    }
+  ```
+  converted payload sample
+  ```json 
+    [
+       {
+        "winnerDetails":
+            {
+                "public_key":"0xab7528bb862fb57e8a2bcd567a2e929a4444e22",
+                "name":"Jonathan",
+                "voteCount":1
+            }
         }
     ]
   ```
