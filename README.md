@@ -1,5 +1,3 @@
-
-```markdown
 <a id="readme-top"></a>
 <!-- PROJECT LOGO -->
 <br />
