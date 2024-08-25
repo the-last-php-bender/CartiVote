@@ -228,7 +228,7 @@ Here you can access examples of dapp communication and resource usage.
        {
         "winnerDetails":
             {
-                "public_key":"0xab7528bb862fb57e8a2bcd567a2e929a4444e22",
+                "public_key":"0xab7528bb862fb57e8a2bcd567a2e929a4444egit 22",
                 "name":"Jonathan",
                 "voteCount":1
             }

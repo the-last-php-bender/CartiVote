@@ -12,7 +12,7 @@ class VotingSystem {
         return rollup.handleNotice("Candidate added successfully");
     }
     async getCandidates() {
-        const getAll =  map.getAll();
+        const getAll = map.getAll();
         if (!getAll) {
             return rollup.handleReport({
                 error: "No candidates has been registered"
@@ -21,22 +21,20 @@ class VotingSystem {
         return await rollup.handleReport(getAll, 'accept');
     }
     async getACandidate(public_key) {
-        console.log("This is the Candidate",public_key)
         const candidate = map.Get(public_key);
         if (!candidate) {
             return await rollup.handleReport({
                 error: "Invalid public_key. Kindly check and try again!"
-            },'reject');
+            }, 'reject');
         }
         return await rollup.handleReport({ candidate }, "accept");
     }
     static async hasVoted(voter_public_key) {
-        return  map.Has(voter_public_key);
+        return map.Has(voter_public_key);
     }
-    
+
     static async closeVote() {
         const entries = map.entries()
-        console.log("entries",entries)
         let winningCandidate = null;
         let maxVotes = 0;
 
@@ -45,7 +43,7 @@ class VotingSystem {
                 error: "No votes have been registered"
             });
         }
-        for (const [public_key, candidate] of  entries) {
+        for (const [public_key, candidate] of entries) {
             if (candidate.voteCount > maxVotes) {
                 winningCandidate = candidate;
                 maxVotes = candidate.voteCount;
@@ -66,7 +64,7 @@ class VotingSystem {
     }
 
     static async getSingleCandidate(public_key) {
-        const candidate =  map.Get(public_key);
+        const candidate = map.Get(public_key);
         if (candidate) {
             return {
                 public_key: public_key,
@@ -78,36 +76,27 @@ class VotingSystem {
         }
     }
     async castVote(voter_public_key, public_key) {
-        try{
-            const check =await VotingSystem.hasVoted(voter_public_key)
-            if ( check ) {
-                return await rollup.handleReport({
-                    error: "VotingSystem user has already voted"
-                });
-            }
-            const candidate = map.Get(public_key);
-            console.log("This is the castVote",public_key)
-            if (!candidate) {
-                return await rollup.handleReport({
-                    error: "Candidate does not exist"
-                });
-            }
-            candidate.voteCount = (candidate.voteCount || 0) + 1;
-            await map.Set(public_key, candidate);
-            await map.Add(voter_public_key);
-            map.voteCount=map.voteCount + 1;
-            if (map.voteCount >= 5) {
-                await VotingSystem.closeVote();
-            }
-            return  rollup.handleNotice("Vote cast successfully");
+        const check = await VotingSystem.hasVoted(voter_public_key)
+        if (check) {
+            return await rollup.handleReport({
+                error: "VotingSystem user has already voted"
+            });
         }
-        catch(e){
-            console.log('false',e)
+        const candidate = map.Get(public_key);
+        if (!candidate) {
+            return await rollup.handleReport({
+                error: "Candidate does not exist"
+            });
         }
-  
+        candidate.voteCount = (candidate.voteCount || 0) + 1;
+        await map.Set(public_key, candidate);
+        await map.Add(voter_public_key);
+        map.voteCount = map.voteCount + 1;
+        if (map.voteCount >= 5) {
+            await VotingSystem.closeVote();
+        }
+        return rollup.handleNotice("Vote cast successfully");
     }
-   
-
 }
 
 module.exports = { VotingSystem };

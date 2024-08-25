@@ -5,12 +5,10 @@ const rollup = require('./rollupStateHandler.js');
 const { hexToString, getAddress } = require('viem');
 const dotenv = require('dotenv')
 dotenv.config();
-const { controller} = require("./arrayController.js")
+const { controller } = require("./arrayController.js")
 const rollup_server = process.env.ROLLUP_HTTP_SERVER_URL;
-console.log("HTTP rollup_server url is " + rollup_server);
 async function handle_advance({ metadata, payload }) {
   console.log('input:', metadata, payload)
-
   const sender = getAddress(metadata.msg_sender)
   const jsonPayload = JSON.parse(hexToString(payload))
   const public_key = jsonPayload.public_key
@@ -35,7 +33,6 @@ async function handle_advance({ metadata, payload }) {
   }
 }
 async function handle_inspect(data) {
-  console.log('Received inspect raw data ->', JSON.stringify(data));
   const urlParams = hexToString(data.payload);
   const urlParamsSplited = urlParams.split('/');
   const requestedAction = urlParamsSplited[0];
@@ -44,8 +41,8 @@ async function handle_inspect(data) {
     action = await controller.getAllCandidate();
   } else if (requestedAction === "getSingleCandidate") {
     action = await controller.getSingleCandidate(urlParamsSplited[1]);
-  }else if (requestedAction==="getWinner"){
-    action =controller.winner();
+  } else if (requestedAction === "getWinner") {
+    action = controller.winner();
   }
   else {
     return await rollup.handleReport({
