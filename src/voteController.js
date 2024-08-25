@@ -1,7 +1,8 @@
 
 const map = require("./storage.js");
 const rollup = require('./rollupStateHandler.js');
-
+const dotenv = require('dotenv')
+dotenv.config();
 class VotingSystem {
     async addCandidate(public_key, data) {
         const candidateData = {
@@ -92,7 +93,7 @@ class VotingSystem {
         await map.Set(public_key, candidate);
         await map.Add(voter_public_key);
         map.voteCount = map.voteCount + 1;
-        if (map.voteCount >= 5) {
+        if (map.voteCount >= process.env.NUMBER_OF_TOTAL_VOTES) {
             await VotingSystem.closeVote();
         }
         return rollup.handleNotice("Vote cast successfully");

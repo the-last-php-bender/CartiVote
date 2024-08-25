@@ -1,6 +1,7 @@
 const voteMap = new Map();
 const voterMap = new Set();
 
+
 class MapUtils {
     voteCount = 0;
     async Set(public_key, data) {

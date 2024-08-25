@@ -1,4 +1,5 @@
 .cartesi
 /dist
 /node_modules
-trial.txt
+
+.env
