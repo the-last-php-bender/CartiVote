@@ -17,6 +17,13 @@
     It's a blockchain-based voting system designed to ensure secure, transparent, and reliable voting processes. Users can add candidates, cast votes, and determine election results, all while leveraging the benefits of blockchain technology such as ownership assurance and decentralized operations.
 </p>
 
+## Author
+
+- **Name:** Nwinyinya David
+- **Email:** nwinyinyadavid123@gmail.com
+- **GitHub:** [@the_last_php_bender](https://github.com/the-last-php-bender)
+- **LinkedIn:** [Nwinyinya David](https://www.linkedin.com/in/david-nwinyinya-882a14257)
+
 ## Getting Started
 
 Below you'll find instructions on how to set up this dapp locally.
@@ -38,7 +45,7 @@ Here are some packages you need to have installed on your PC:
 
 1. Clone this repo
    ```sh
-   git clone https://github.com/OsmanRodrigues/carti-vote-dapp.git
+   git clone https://github.com/the-last-php-bender/CartiVote.git
    ```
 2. Install NPM packages
    ```sh
